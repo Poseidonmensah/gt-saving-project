@@ -122,6 +122,7 @@ export const adminApi = {
   unlockUser:    (id: string) => api.post(`/users/${id}/unlock`).then(d),
   resetPassword: (id: string, newPassword: string) => api.post(`/users/${id}/reset-password`, { newPassword }).then(d),
   getProducts:   () => api.get('/configuration/products').then(d),
+  getLoanProducts: () => api.get('/configuration/loan-products').then(d),
   updateProduct: (code: string, b: any) => api.patch(`/configuration/products/${code}`, b).then(d),
   getFees:       () => api.get('/configuration/fees').then(d),
   getMatrix:     () => api.get('/configuration/approval-matrix').then(d),
@@ -130,8 +131,6 @@ export const adminApi = {
 };
 
 // Reconciliation
-  getLoanProducts: () => api.get("/configuration/loan-products").then((r: any) => r.data?.data ?? r.data),
-
 export const reconApi = {
   getSessions:  (p: any) => api.get('/reconciliation', { params: p }).then(d),
   startSession: (b: any) => api.post('/reconciliation/session', b).then(d),
@@ -147,11 +146,4 @@ export const ledgerApi = {
   accountLedger:   (code: string, p: any) => api.get(`/ledger/account/${code}`, { params: p }).then(d),
   chartOfAccounts: () => api.get('/ledger/chart-of-accounts').then(d),
   journal:         (id: string) => api.get(`/ledger/journals/${id}`).then(d),
-};
-
-// Additional missing method
-// Patch adminApi to add getLoanProducts  
-// (used by LoanApplicationPage)
-export const getLoanProductsApi = {
-  getLoanProducts: () => api.get('/configuration/loan-products').then((r: any) => r.data?.data ?? r.data),
 };
