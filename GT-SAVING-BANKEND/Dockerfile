@@ -1,21 +1,23 @@
-# ============================================================
-# Backend Dockerfile
-# ============================================================
-FROM node:20-alpine AS builder
+# 1. Use Node.js version 20
+FROM node:20-alpine
+
+# 2. Set the working directory
 WORKDIR /app
+
+# 3. Copy package files
 COPY package*.json ./
-RUN npm ci --only=production
+
+# 4. Install dependencies
+RUN npm install --legacy-peer-deps
+
+# 5. Copy the rest of your code
 COPY . .
+
+# 6. Build the project
 RUN npm run build
 
-FROM node:20-alpine AS production
-WORKDIR /app
-RUN addgroup -g 1001 -S nodejs && adduser -S nestjs -u 1001
-COPY --from=builder --chown=nestjs:nodejs /app/dist ./dist
-COPY --from=builder --chown=nestjs:nodejs /app/node_modules ./node_modules
-COPY --from=builder --chown=nestjs:nodejs /app/package.json ./
-USER nestjs
+# 7. Expose the port (NestJS usually uses 3000)
 EXPOSE 3000
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD wget -qO- http://localhost:3000/api/v1/health || exit 1
-CMD ["node", "dist/main"]
+
+# 8. Start the app
+CMD ["npm", "run", "start:prod"]
