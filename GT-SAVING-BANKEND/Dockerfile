@@ -4,10 +4,10 @@ FROM node:20-alpine
 # 2. Install dependencies needed for some node modules on Alpine
 RUN apk add --no-cache libc6-compat
 
-# 3. Set the working directory
+# 3. Set the working directory inside the container
 WORKDIR /app
 
-# 4. Copy package files first
+# 4. Copy package files first (better for caching)
 COPY package*.json ./
 
 # 5. Install dependencies using the legacy-peer-deps flag
