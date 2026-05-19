@@ -7,10 +7,10 @@ RUN apk add --no-cache libc6-compat
 # 3. Set the working directory
 WORKDIR /app
 
-# 4. Copy package files first (better for caching)
+# 4. Copy package files first
 COPY package*.json ./
 
-# 5. Install dependencies using the legacy-peer-deps flag to avoid NestJS 11 conflicts
+# 5. Install dependencies using the legacy-peer-deps flag
 RUN npm install --legacy-peer-deps
 
 # 6. Copy the rest of your application code
@@ -19,7 +19,7 @@ COPY . .
 # 7. Build the NestJS project
 RUN npm run build
 
-# 8. Expose the port (Back4App and NestJS standard)
+# 8. Expose the port (NestJS standard)
 EXPOSE 3000
 
 # 9. Start the application in production mode
