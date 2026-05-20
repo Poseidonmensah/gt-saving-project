@@ -2,8 +2,8 @@ import { Controller, Get, Param, Query, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { ReportsService } from './reports.service';
-import { JwtAuthGuard, RolesGuard } from '../../common/guards';
-import { Roles, CurrentUser } from '../../common/decorators';
+import { JwtAuthGuard, RolesGuard } from '../../common/guards/jwt-auth.guard.ts';
+import { Roles, CurrentUser } from '../../common/decorators/current-user.decorator.ts';
 
 const REPORT_ROLES = ['super_admin','admin','branch_manager','accountant','auditor','compliance_officer'];
 

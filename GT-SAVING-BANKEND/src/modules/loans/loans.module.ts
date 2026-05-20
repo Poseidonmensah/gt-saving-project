@@ -804,8 +804,8 @@ export class LoansService {
 import { Controller, Get, Post, Body, Param, Query, UseGuards, Patch } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { LoansService } from './loans.service';
-import { JwtAuthGuard, RolesGuard } from '../../common/guards';
-import { Roles, CurrentUser } from '../../common/decorators';
+import { JwtAuthGuard, RolesGuard } from '../../common/guards/jwt-auth.guard.ts';
+import { Roles, CurrentUser } from '../../common/decorators/current-user.decorator.ts';
 import { IsString, IsNumber, IsOptional, IsPositive, IsDateString, IsBoolean } from 'class-validator';
 import { Type } from 'class-transformer';
 

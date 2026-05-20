@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Body, Param, Query, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { FixedDepositsService } from './fixed-deposits.service';
-import { JwtAuthGuard, RolesGuard } from '../../common/guards';
-import { Roles, CurrentUser } from '../../common/decorators';
+import { JwtAuthGuard, RolesGuard } from '../../common/guards/jwt-auth.guard.ts';
+import { Roles, CurrentUser } from '../../common/decorators/current-user.decorator.ts';
 
 @ApiTags('fixed-deposits')
 @ApiBearerAuth('JWT')

@@ -1,8 +1,8 @@
 import { Controller, Get, Query, Param, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { LedgerService } from './ledger.service';
-import { JwtAuthGuard, RolesGuard } from '../../common/guards';
-import { Roles } from '../../common/decorators';
+import { JwtAuthGuard, RolesGuard } from '../../common/guards/jwt-auth.guard.ts';
+import { Roles } from '../../common/decorators/current-user.decorator.ts';
 
 @ApiTags('ledger')
 @ApiBearerAuth('JWT')

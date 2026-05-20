@@ -4,7 +4,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
-import { ROLES_KEY } from '../decorators';
+import { ROLES_KEY } from '../decorators/current-user.decorator.js';
 
 // ============================================================
 // JWT Auth Guard

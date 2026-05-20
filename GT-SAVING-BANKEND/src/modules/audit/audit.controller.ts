@@ -2,8 +2,8 @@ import { Controller, Get, Query, UseGuards, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AuditService } from './audit.service';
-import { JwtAuthGuard, RolesGuard } from '../../common/guards';
-import { Roles, CurrentUser } from '../../common/decorators';
+import { JwtAuthGuard, RolesGuard } from '../../common/guards/jwt-auth.guard.ts';
+import { Roles, CurrentUser } from '../../common/decorators/current-user.decorator.ts';
 
 @ApiTags('audit')
 @ApiBearerAuth('JWT')

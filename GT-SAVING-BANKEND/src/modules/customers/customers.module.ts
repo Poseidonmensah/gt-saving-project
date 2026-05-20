@@ -313,8 +313,8 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiBearerAuth, ApiOperation, ApiConsumes } from '@nestjs/swagger';
 import { CustomersService } from './customers.service';
-import { JwtAuthGuard, RolesGuard } from '../../common/guards';
-import { Roles, CurrentUser } from '../../common/decorators';
+import { JwtAuthGuard, RolesGuard } from '../../common/guards/jwt-auth.guard.ts';
+import { Roles, CurrentUser } from '../../common/decorators/current-user.decorator.ts';
 import {
   IsString, IsOptional, IsEmail, IsDateString,
   IsPhoneNumber, IsNumber, Min, IsIn,

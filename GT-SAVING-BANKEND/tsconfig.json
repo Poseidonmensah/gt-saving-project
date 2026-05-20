@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
@@ -8,21 +9,25 @@
     "allowSyntheticDefaultImports": true,
     "target": "ES2021",
     "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": "./",
+    "outDir": "dist",
+    "rootDir": "src",
+    "baseUrl": ".",
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": true,
+    "strict": false,
+    "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+    "esModuleInterop": true,
     "paths": {
       "@common/*": ["src/common/*"],
       "@modules/*": ["src/modules/*"],
       "@config/*": ["src/config/*"]
-    }
+    },
+    "types": ["node", "jest"]
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]
 }

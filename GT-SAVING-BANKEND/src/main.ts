@@ -6,8 +6,7 @@ import helmet from 'helmet';
 import compression from 'compression';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
-import { TransformInterceptor } from './common/interceptors/transform.interceptor';
-import { AuditInterceptor } from './common/interceptors/audit.interceptor';
+import { TransformInterceptor, AuditInterceptor } from './common/interceptors';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -34,7 +33,7 @@ async function bootstrap() {
 
   // CORS
   app.enableCors({
-    origin: configService.get<string>('FRONTEND_URL', 'http://localhost:5173'),
+    origin: configService.get<string>('FRONTEND_URL', '*'),
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Idempotency-Key', 'X-Request-ID'],
@@ -66,21 +65,6 @@ async function bootstrap() {
     .setDescription('Enterprise Financial Management System API')
     .setVersion('1.0')
     .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'JWT')
-    .addTag('auth', 'Authentication & Authorization')
-    .addTag('customers', 'Customer Management & KYC')
-    .addTag('accounts', 'Account Management')
-    .addTag('teller', 'Teller Operations')
-    .addTag('transactions', 'Transactions')
-    .addTag('loans', 'Loan Management')
-    .addTag('fixed-deposits', 'Fixed Deposits')
-    .addTag('ledger', 'General Ledger')
-    .addTag('reconciliation', 'Reconciliation')
-    .addTag('reports', 'Reports')
-    .addTag('workflow', 'Workflow & Approvals')
-    .addTag('configuration', 'System Configuration')
-    .addTag('audit', 'Audit Logs')
-    .addTag('notifications', 'Notifications')
-    .addTag('documents', 'Document Management')
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
@@ -89,8 +73,7 @@ async function bootstrap() {
   });
 
   await app.listen(port);
-  Logger.log(`🚀 Good Time SLS API running on http://localhost:${port}/${apiPrefix}`, 'Bootstrap');
-  Logger.log(`📚 Swagger docs at http://localhost:${port}/${apiPrefix}/docs`, 'Bootstrap');
+  Logger.log(`🚀 API running on port ${port}`, 'Bootstrap');
 }
 
 bootstrap();

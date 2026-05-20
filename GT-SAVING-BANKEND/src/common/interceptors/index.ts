@@ -1,11 +1,12 @@
-// ============================================================
-// src/common/interceptors/transform.interceptor.ts
-// ============================================================
 import {
-  Injectable, NestInterceptor, ExecutionContext, CallHandler,
+  Injectable,
+  NestInterceptor,
+  ExecutionContext,
+  CallHandler,
+  Logger,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 export interface ApiResponse<T> {
   success: boolean;
@@ -35,20 +36,13 @@ export class TransformInterceptor<T> implements NestInterceptor<T, ApiResponse<T
   }
 }
 
-// ============================================================
-// src/common/interceptors/audit.interceptor.ts
-// ============================================================
-import { Injectable, NestInterceptor, ExecutionContext, CallHandler, Logger } from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-
 @Injectable()
 export class AuditInterceptor implements NestInterceptor {
   private readonly logger = new Logger('HTTP');
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const request = context.switchToHttp().getRequest();
-    const { method, url, user, headers, ip } = request;
+    const { method, url, user, ip } = request;
     const startTime = Date.now();
 
     return next.handle().pipe(

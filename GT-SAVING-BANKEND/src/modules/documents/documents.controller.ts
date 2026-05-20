@@ -2,8 +2,8 @@ import { Controller, Get, Post, Delete, Param, Query, UseGuards, UploadedFile, U
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiBearerAuth, ApiConsumes } from '@nestjs/swagger';
 import { DocumentsService } from './documents.service';
-import { JwtAuthGuard, RolesGuard } from '../../common/guards';
-import { Roles, CurrentUser } from '../../common/decorators';
+import { JwtAuthGuard, RolesGuard } from '../../common/guards/jwt-auth.guard.ts';
+import { Roles, CurrentUser } from '../../common/decorators/current-user.decorator.ts';
 
 @ApiTags('documents')
 @ApiBearerAuth('JWT')
