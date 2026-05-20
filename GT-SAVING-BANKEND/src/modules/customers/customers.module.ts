@@ -6,7 +6,6 @@ import { AuditModule } from '../audit/audit.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([]), // Add CustomerEntity here later
     AuditModule,
   ],
   controllers: [CustomersController],
