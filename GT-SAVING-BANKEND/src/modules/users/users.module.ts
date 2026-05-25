@@ -179,8 +179,8 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { UsersService } from './users.service';
-import { JwtAuthGuard, RolesGuard } from '../../common/guards/jwt-auth.guard.ts';
-import { Roles, CurrentUser } from '../../common/decorators/current-user.decorator.ts';
+import { JwtAuthGuard, RolesGuard } from '../../common/guards/jwt-auth.guard';
+import { Roles, CurrentUser } from '../../common/decorators/current-user.decorator';
 import { IsEmail, IsString, MinLength, IsOptional, IsIn } from 'class-validator';
 
 class CreateUserDto {

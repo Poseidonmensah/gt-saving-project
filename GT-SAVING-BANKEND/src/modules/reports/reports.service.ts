@@ -440,8 +440,8 @@ interface ReportParams {
 import { Controller, Get, Post, Query, Param, Res, UseGuards, Body } from '@nestjs/common';
 import { Response } from 'express';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-import { JwtAuthGuard, RolesGuard } from '../../common/guards/jwt-auth.guard.ts';
-import { Roles, CurrentUser } from '../../common/decorators/current-user.decorator.ts';
+import { JwtAuthGuard, RolesGuard } from '../../common/guards/jwt-auth.guard';
+import { Roles, CurrentUser } from '../../common/decorators/current-user.decorator';
 
 @ApiTags('reports')
 @ApiBearerAuth('JWT')

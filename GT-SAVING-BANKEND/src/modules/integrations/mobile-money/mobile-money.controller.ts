@@ -1,8 +1,8 @@
 import { Controller, Post, Get, Body, Param, Headers, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { MobileMoneyService } from './mobile-money.service';
-import { JwtAuthGuard, RolesGuard } from '../../../common/guards/jwt-auth.guard.ts';
-import { Roles, CurrentUser } from '../../../common/decorators/current-user.decorator.ts';
+import { JwtAuthGuard, RolesGuard } from '../../../common/guards/jwt-auth.guard';
+import { Roles, CurrentUser } from '../../../common/decorators/current-user.decorator';
 
 @ApiTags('mobile-money')
 @Controller('integrations/mobile-money')

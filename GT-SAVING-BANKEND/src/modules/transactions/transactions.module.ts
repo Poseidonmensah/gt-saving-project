@@ -471,8 +471,8 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { TransactionsService } from './transactions.service';
-import { JwtAuthGuard, RolesGuard } from '../../common/guards/jwt-auth.guard.ts';
-import { Roles, CurrentUser, IdempotencyKey } from '../../common/decorators/current-user.decorator.ts';
+import { JwtAuthGuard, RolesGuard } from '../../common/guards/jwt-auth.guard';
+import { Roles, CurrentUser, IdempotencyKey } from '../../common/decorators/current-user.decorator';
 import { IsString, IsOptional, IsNumber, IsPositive, Min } from 'class-validator';
 import { Type } from 'class-transformer';
 

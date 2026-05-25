@@ -1,8 +1,8 @@
 import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { NotificationsService } from './notifications.service';
-import { JwtAuthGuard, RolesGuard } from '../../common/guards/jwt-auth.guard.ts';
-import { Roles } from '../../common/decorators/current-user.decorator.ts';
+import { JwtAuthGuard, RolesGuard } from '../../common/guards/jwt-auth.guard';
+import { Roles } from '../../common/decorators/current-user.decorator';
 
 @ApiTags('notifications')
 @ApiBearerAuth('JWT')
