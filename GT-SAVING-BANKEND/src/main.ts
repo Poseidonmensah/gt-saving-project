@@ -9,8 +9,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
   
-  // Back4App provides the PORT environment variable
-  const port = process.env.PORT || configService.get<number>('PORT', 3000);
+  // Use Back4App's port or default to 3000
+  const port = process.env.PORT || 3000;
 
   app.use(helmet({ crossOriginEmbedderPolicy: false }));
   app.use(compression());
@@ -18,7 +18,7 @@ async function bootstrap() {
   app.setGlobalPrefix('api/v1');
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
-  // Use '0.0.0.0' to allow external health checks to reach the app
+  // CRITICAL: listen on 0.0.0.0
   await app.listen(port, '0.0.0.0');
   Logger.log(`🚀 Backend is live on port ${port}`, 'Bootstrap');
 }

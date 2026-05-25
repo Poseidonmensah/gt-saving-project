@@ -3,7 +3,8 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class AuditService {
   async log(data: any) {
-    console.log('Audit Log:', data);
+    // This logs to the console so you can see it in Back4App logs
+    console.log('AUDIT_LOG:', JSON.stringify(data));
     return { success: true };
   }
 

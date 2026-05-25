@@ -17,8 +17,8 @@
     "test:cov": "jest --coverage",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "typeorm-ts-node-commonjs",
-    "migration:run": "npm run typeorm migration:run -- -d src/config/database.config.ts",
-    "migration:revert": "npm run typeorm migration:revert -- -d src/config/database.config.ts"
+    "migration:run": "npm run typeorm migration:run -- -d src/config/database.config",
+    "migration:revert": "npm run typeorm migration:revert -- -d src/config/database.config"
   },
   "dependencies": {
     "@nestjs/axios": "^3.0.2",
