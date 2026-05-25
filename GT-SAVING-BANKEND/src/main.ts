@@ -17,21 +17,9 @@ async function bootstrap() {
   const port = configService.get<number>('PORT', 3000);
   const apiPrefix = configService.get<string>('API_PREFIX', 'api/v1');
 
-  // Security middleware
-  app.use(helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        styleSrc: ["'self'", "'unsafe-inline'"],
-        imgSrc: ["'self'", 'data:', 'blob:'],
-        scriptSrc: ["'self'"],
-      },
-    },
-    crossOriginEmbedderPolicy: false,
-  }));
+  app.use(helmet({ crossOriginEmbedderPolicy: false }));
   app.use(compression());
 
-  // CORS
   app.enableCors({
     origin: configService.get<string>('FRONTEND_URL', '*'),
     credentials: true,
@@ -39,41 +27,21 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Idempotency-Key', 'X-Request-ID'],
   });
 
-  // Global prefix
   app.setGlobalPrefix(apiPrefix);
-
-  // Global pipes
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    forbidNonWhitelisted: true,
-    transform: true,
-    transformOptions: { enableImplicitConversion: true },
-  }));
-
-  // Global filters
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalInterceptors(new TransformInterceptor(), new AuditInterceptor());
 
-  // Global interceptors
-  app.useGlobalInterceptors(
-    new TransformInterceptor(),
-    new AuditInterceptor(),
-  );
-
-  // Swagger API Documentation
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Good Time Saving & Loans API')
-    .setDescription('Enterprise Financial Management System API')
     .setVersion('1.0')
     .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'JWT')
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup(`${apiPrefix}/docs`, app, document, {
-    swaggerOptions: { persistAuthorization: true },
-  });
+  SwaggerModule.setup(`${apiPrefix}/docs`, app, document);
 
   await app.listen(port);
   Logger.log(`🚀 API running on port ${port}`, 'Bootstrap');
 }
-
 bootstrap();
