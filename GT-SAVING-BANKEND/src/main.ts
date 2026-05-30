@@ -6,23 +6,15 @@ import compression from 'compression';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    logger: ['error', 'warn', 'log'],
-  });
-
+  const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
   
-  // Use the PORT provided by Back4App, default to 3000
+  // Back4App assigned port or 3000
   const port = process.env.PORT || 3000;
 
-  // Security and Performance
-  app.use(helmet({ 
-    crossOriginEmbedderPolicy: false,
-    contentSecurityPolicy: false 
-  }));
+  app.use(helmet({ crossOriginEmbedderPolicy: false }));
   app.use(compression());
-
-  // Allow Vercel to talk to this server
+  
   app.enableCors({
     origin: '*',
     credentials: true,
@@ -35,9 +27,8 @@ async function bootstrap() {
     transformOptions: { enableImplicitConversion: true } 
   }));
 
-  // CRITICAL FIX: Bind to '0.0.0.0' for Cloud Hosting
+  // CRITICAL: listen on 0.0.0.0 so Back4App health check succeeds
   await app.listen(port, '0.0.0.0');
-  
-  Logger.log(`🚀 Backend is live on port ${port}`, 'Bootstrap');
+  Logger.log(`🚀 Backend is listening on 0.0.0.0:${port}`, 'Bootstrap');
 }
 bootstrap();
