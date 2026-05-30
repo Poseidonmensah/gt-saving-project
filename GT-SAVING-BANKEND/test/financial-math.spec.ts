@@ -341,7 +341,7 @@ describe('Business Rules', () => {
 
   describe('SRS 6.4 — Loan Processing', () => {
     it('disbursement must not occur before approval', () => {
-      const loanStatus = 'submitted'; // Not yet approved
+      const loanStatus: string = 'submitted'; // Not yet approved
       const canDisburse = loanStatus === 'approved';
       expect(canDisburse).toBe(false);
     });

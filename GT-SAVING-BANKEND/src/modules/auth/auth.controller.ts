@@ -13,7 +13,8 @@ export class AuthController {
   @Post('login')
   @HttpCode(HttpStatus.OK)
   async login(@Body() dto: LoginDto) {
-    return this.authService.login(dto);
+    const user = await this.authService.validateUser(dto.username, dto.password);
+    return this.authService.login(user);
   }
 
   @Get('me')

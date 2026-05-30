@@ -9,17 +9,43 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
   
-  // Use Back4App's port or default to 3000
-  const port = process.env.PORT || 3000;
+  // Use the PORT provided by the environment (Back4App), defaulting to 3000
+  const port = process.env.PORT || configService.get<number>('PORT', 3000);
 
-  app.use(helmet({ crossOriginEmbedderPolicy: false }));
+  // Security Middleware
+  app.use(helmet({ 
+    crossOriginEmbedderPolicy: false,
+    contentSecurityPolicy: false // Disable CSP for simpler development/hosting handshake
+  }));
+  
   app.use(compression());
-  app.enableCors({ origin: '*', credentials: true });
-  app.setGlobalPrefix('api/v1');
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
-  // CRITICAL: listen on 0.0.0.0
+  // CORS Configuration: Allows your Vercel frontend to communicate with this Backend
+  app.enableCors({
+    origin: true, // This allows all origins in development; change to your Vercel URL later
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Idempotency-Key', 'X-Request-ID'],
+  });
+
+  // Sets the base path for all routes (e.g., https://your-app.back4app.io/api/v1/...)
+  app.setGlobalPrefix('api/v1');
+
+  // Automatic Data Validation
+  app.useGlobalPipes(new ValidationPipe({ 
+    whitelist: true, 
+    transform: true,
+    transformOptions: { enableImplicitConversion: true } 
+  }));
+
+  // Fail-safe check for JWT Secret
+  if (!configService.get('JWT_SECRET')) {
+    Logger.error('JWT_SECRET is not set! Authentication will fail. Please add it to Back4App Environment Variables.', 'Bootstrap');
+  }
+
+  // CRITICAL: Bind to 0.0.0.0 so Back4App's health check can reach the app
   await app.listen(port, '0.0.0.0');
-  Logger.log(`🚀 Backend is live on port ${port}`, 'Bootstrap');
+  
+  Logger.log(`🚀 Backend is live and listening on port ${port}`, 'Bootstrap');
 }
 bootstrap();

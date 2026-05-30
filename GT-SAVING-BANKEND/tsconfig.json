@@ -13,13 +13,14 @@
     "incremental": true,
     "skipLibCheck": true,
     "strict": false,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
     "esModuleInterop": true,
     "paths": {
       "@common/*": ["src/common/*"],
-      "@modules/*": ["src/modules/*"],
-      "@config/*": ["src/config/*"]
+      "@modules/*": ["src/modules/*"]
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "test"]
+  "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]
 }
