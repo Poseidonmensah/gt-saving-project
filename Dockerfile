@@ -1,27 +1,27 @@
-# 1. Use Node.js
+# 1. Use Node.js version 20
 FROM node:20-alpine
 
-# 2. Install tools needed for Alpine
+# 2. Install libc tools for NestJS compatibility
 RUN apk add --no-cache libc6-compat
 
-# 3. Set the work directory inside the container
+# 3. Set the work directory
 WORKDIR /app
 
-# 4. COPY package files from your folder to the container
-# This looks for the folder named GT-SAVING-BANKEND
+# 4. Copy package files from the subfolder
 COPY GT-SAVING-BANKEND/package*.json ./
 
-# 5. Install dependencies
+# 5. Install dependencies with the legacy flag
 RUN npm install --legacy-peer-deps
 
-# 6. COPY the rest of the code from that folder
+# 6. Copy the entire code folder
 COPY GT-SAVING-BANKEND/ .
 
-# 7. Build the NestJS project
+# 7. Build the production code
 RUN npm run build
 
-# 8. Expose the port
+# 8. Set the PORT and expose it
+ENV PORT=3000
 EXPOSE 3000
 
-# 9. Start the app
+# 9. Start the application
 CMD ["npm", "run", "start:prod"]
