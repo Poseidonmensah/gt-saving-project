@@ -15,7 +15,7 @@
     "skipLibCheck": true,
     "strict": false,
     "esModuleInterop": true,
-    "ignoreDeprecations": "6.0",
+    "ignoreDeprecations": "5.0",
     "paths": {
       "@common/*": ["src/common/*"],
       "@modules/*": ["src/modules/*"]
