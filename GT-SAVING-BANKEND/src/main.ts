@@ -7,20 +7,23 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
-  const app = await NestFactory.create(AppModule);
-  const configService = app.get(ConfigService);
-  
-  // Use Back4App assigned port or 3000
-  const port = process.env.PORT || 3000;
+  try {
+    const app = await NestFactory.create(AppModule);
+    const configService = app.get(ConfigService);
+    const port = process.env.PORT || 3000;
 
-  app.use(helmet({ crossOriginEmbedderPolicy: false, contentSecurityPolicy: false }));
-  app.use(compression());
-  app.enableCors({ origin: '*', credentials: true });
-  app.setGlobalPrefix('api/v1');
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+    app.use(helmet({ crossOriginEmbedderPolicy: false, contentSecurityPolicy: false }));
+    app.use(compression());
+    app.enableCors({ origin: '*', credentials: true });
+    app.setGlobalPrefix('api/v1');
+    app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
-  // CRITICAL: listen on 0.0.0.0
-  await app.listen(port, '0.0.0.0');
-  logger.log(`✅ Backend is successfully listening on 0.0.0.0:${port}`);
+    // Bind to 0.0.0.0
+    await app.listen(port, '0.0.0.0');
+    logger.log(`✅ SUCCESS: Server listening on 0.0.0.0:${port}`);
+  } catch (err) {
+    logger.error(`❌ CRASH ON STARTUP: ${err.message}`);
+    process.exit(1);
+  }
 }
 bootstrap();
