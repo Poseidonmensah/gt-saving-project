@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { TransactionsService } from './transactions.service';
 import { TransactionsController } from './transactions.controller';
+import { TransactionsService } from './transactions.service';
 import { AccountsModule } from '../accounts/accounts.module';
 
 @Module({
-  imports: [AccountsModule],
+  imports: [AccountsModule], // CRITICAL: Import this
   controllers: [TransactionsController],
   providers: [TransactionsService],
   exports: [TransactionsService],
