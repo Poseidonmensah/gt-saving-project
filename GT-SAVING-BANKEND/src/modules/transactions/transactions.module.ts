@@ -4,7 +4,7 @@ import { TransactionsService } from './transactions.service';
 import { AccountsModule } from '../accounts/accounts.module';
 
 @Module({
-  imports: [AccountsModule], // This gives Transactions access to AccountsService
+  imports: [AccountsModule], // IMPORTED TO ACCESS ACCOUNTS SERVICE
   controllers: [TransactionsController],
   providers: [TransactionsService],
   exports: [TransactionsService],

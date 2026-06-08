@@ -18,11 +18,11 @@ async function bootstrap() {
     app.setGlobalPrefix('api/v1');
     app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
-    // CRITICAL: Bind to 0.0.0.0
+    // Bind to 0.0.0.0 is MANDATORY for cloud hosting
     await app.listen(port, '0.0.0.0');
-    logger.log(`✅ Backend listening on 0.0.0.0:${port}`);
-  } catch (err) {
-    logger.error(`❌ Startup Crash: ${err.message}`);
+    logger.log(`✅ Backend is successfully listening on 0.0.0.0:${port}`);
+  } catch (error) {
+    logger.error(`❌ STARTUP FAILED: ${error.message}`);
     process.exit(1);
   }
 }

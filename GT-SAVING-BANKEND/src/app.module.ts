@@ -25,17 +25,9 @@ import { LoansModule } from './modules/loans/loans.module';
         ssl: { rejectUnauthorized: false },
       }),
     }),
-    // Utility Modules (Global)
-    AuditModule,
-    NotificationsModule,
-    WorkflowModule,
-    // Business Modules
-    AuthModule,
-    UsersModule,
-    CustomersModule,
-    AccountsModule,
-    TransactionsModule,
-    LoansModule,
+    AuditModule, NotificationsModule, WorkflowModule,
+    AuthModule, UsersModule, CustomersModule, AccountsModule,
+    TransactionsModule, LoansModule,
   ],
 })
 export class AppModule {}
